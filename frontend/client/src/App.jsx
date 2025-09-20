@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import './App.css'
 import LoginButton from './loginButton'
 import LogoutButton from './LogoutButton'
+import Gmap from './gMap';
 
 function App() {
   const [name, setName] = useState('');
@@ -34,6 +35,7 @@ function App() {
     <div class = "container">
       <div class = "map">
         <h2>Select a location to view report</h2>
+        <Gmap />
       </div>
     </div>
     <div>
