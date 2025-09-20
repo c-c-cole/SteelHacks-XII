@@ -1,2 +1,1 @@
-REACT_APP_AUTH0_DOMAIN=dev-ipxlqcoypzqem0g5.us.auth0.
-REACT_APP_AUTH0_CLIENT_ID=jurB0u0MfkpKE1Yd6TenzWjeIZOrSYRG
+stupid stupid stupid
