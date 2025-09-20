@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useAuth0 } from '@auth0/auth0-react';
 import './App.css'
 import LoginButton from './loginButton'
+import LogoutButton from './LogoutButton'
+
 
 function App() {
   const [name, setName] = useState('');
+
+  const { isAuthenticated } = useAuth0(); 
 
   const handleInput = (e) => {
     setName(e.target.value);
@@ -24,9 +27,7 @@ function App() {
         <h1>Access Map</h1>
       </div>
       <div class = "extra-info">
-        <p>Sign Up</p>
-        <p>Login</p>
-        <LoginButton />
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </div>
     </div>
 
