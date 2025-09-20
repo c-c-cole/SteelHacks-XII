@@ -4,11 +4,10 @@ import './App.css'
 import LoginButton from './loginButton'
 import LogoutButton from './LogoutButton'
 
-
 function App() {
   const [name, setName] = useState('');
 
-  const { isAuthenticated } = useAuth0(); 
+  const { isAuthenticated, user} = useAuth0(); 
 
   const handleInput = (e) => {
     setName(e.target.value);
@@ -27,7 +26,7 @@ function App() {
         <h1>Access Map</h1>
       </div>
       <div class = "extra-info">
-        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        <p>"works for all!"</p>    
       </div>
     </div>
 

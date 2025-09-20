@@ -65,3 +65,22 @@ body {
   .comment button {
     margin-left: 10px;
   }
+
+  
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f4f4f4;
+}
+
+.nav-bar a {
+  margin-right: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.auth-buttons {
+  margin-left: auto;
+}
