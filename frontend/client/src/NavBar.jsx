@@ -9,6 +9,7 @@ function NavBar() {
   return (
     <div className="nav-bar">
       <Link to="/">Home</Link>
+      <Link to="/about">About</Link> {/* Added About link */}
       {isAuthenticated && <Link to="/profile">Profile</Link>}
 
       <div className="auth-buttons">

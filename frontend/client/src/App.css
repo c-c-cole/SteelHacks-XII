@@ -122,7 +122,7 @@ body {
   padding: 1rem;
   background: #9afffd;
   border-radius: 15px;
-  margin-bottom: 1.5rem; /* add spacing below nav bar */
+  margin-bottom: 1rem; /* add spacing below nav bar */
 }
 
 .nav-bar a {
