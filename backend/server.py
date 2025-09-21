@@ -30,8 +30,8 @@ def home():
 
 @app.route("/hospitals", methods=["GET"])
 def get_hospitals():
-   hospitals = collection.find({}, {"_id": 0, "Y": 1, "X": 1})
+   hospitals = collection.find({}, {"_id": 0, "Y": 1, "X": 1, "Facility": 1, "Address": 1})
 
 
-   result = [[doc["Y"], doc["X"]] for doc in hospitals if "Y" in doc and "X" in doc]
+   result = [[doc["Y"], doc["X"], doc["Facility"], doc["Address"]] for doc in hospitals if "Y" in doc and "X" in doc and "Facility" in doc and "Address" in doc]
    return jsonify(result)

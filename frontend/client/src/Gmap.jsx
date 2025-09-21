@@ -37,11 +37,11 @@ const Gmap = () => {
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom = {15}>
-                {hospitals.map(([lat, lng],index) => (
+                {hospitals.map(([lat, lng, facility, address],index) => (
                 <Marker 
                 key = {index} 
                 position={{ lat: lat, lng: lng}}
-                onClick= {() => setSelectedHospital({ lat, lng, index})}
+                onClick= {() => setSelectedHospital({ lat, lng, facility, address, index})}
                 />
             ))}
 
@@ -51,10 +51,10 @@ const Gmap = () => {
                     onCloseClick= {() => setSelectedHospital(null)}
                 >
                     <div>
-                        <h3>Info</h3>
-                        <p><strong>Latitude: </strong> {selectedHospital.lat}</p>
-                        <p><strong>Longitude: </strong> {selectedHospital.lng}</p>
-                        <p><em>(Marker #{selectedHospital.index})</em></p>
+                        <h2>{selectedHospital.facility}</h2>
+                        <p><strong></strong>{selectedHospital.address}</p>
+                        <h3><strong>Latitude: </strong> {selectedHospital.lat}</h3>
+                        <h3><strong>Longitude: </strong> {selectedHospital.lng}</h3>
                     </div>
                 </InfoWindow>
             )}
