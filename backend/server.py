@@ -15,13 +15,24 @@ client = MongoClient(mongo_uri)
 db = client["Pitt_Data"]
 collection = db["Hospitals"]
 
-# precompute low/high for A rating
-distances = [h['nearestBusStopDist'] for h in db.Hospitals.find()]
-low = np.percentile(distances, 10)
-high = np.percentile(distances, 90)
+# # precompute low/high for A rating
+# distances = [h['nearestBusStopDist'] for h in db.Hospitals.find()]
+# low = np.percentile(distances, 10)
+# high = np.percentile(distances, 90)
+
+def compute_low_high():
+    distances = [h['nearestBusStopDist'] for h in db.Hospitals.find() if 'nearestBusStopDist' in h]
+    if not distances:
+        return 0, 1  # avoid crash if collection is empty
+    low = np.percentile(distances, 10)
+    high = np.percentile(distances, 90)
+    return low, high
+
 
 @app.route("/service/<service_id>", methods=["GET"])
 def get_service(service_id):
+    low, high = compute_low_high()
+
     service = db.Hospitals.find_one({"_id": int(service_id)})
     if not service:
         return jsonify({"error": "Service not found"}), 404
