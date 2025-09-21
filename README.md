@@ -31,3 +31,5 @@ To run backend
    cd backend
    flask --app server.py run
 
+
+-- ChatGPT was used in the development process --
