@@ -24,7 +24,7 @@ def compute_low_high_bus():
     if not distances:
         return 0, 1
     low = np.percentile(distances, 10)
-    high = np.percentile(distances, 90)
+    high = np.percentile(distances, 80)
     return low, high
 
 def compute_low_high_bike():
@@ -32,7 +32,7 @@ def compute_low_high_bike():
     if not distances:
         return 0, 1
     low = np.percentile(distances, 10)
-    high = np.percentile(distances, 90)
+    high = np.percentile(distances, 80)
     return low, high
 
 def compute_income_bounds():
