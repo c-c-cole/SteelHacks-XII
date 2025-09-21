@@ -22,27 +22,32 @@ high = np.percentile(distances, 90)
 
 @app.route("/service/<service_id>", methods=["GET"])
 def get_service(service_id):
-    service = db.Hospitals.find_one({"_id": int(service_id)}) # adapt type to what the _id will be
+    service = db.Hospitals.find_one({"_id": int(service_id)})
     if not service:
         return jsonify({"error": "Service not found"}), 404
 
-    # compute A
-    d = service['nearestBusStopDist']
-    A = max(0, min(1, 1 - (d - low)/(high - low)))
+    d = service.get('nearestBusStopDist', None)
+    if d is None:
+        return jsonify({"error": "Bus distance not found for this service"}), 400
+    A = max(0, min(1, 1 - (d - low) / (high - low)))
 
-    # compute criticality C 
-    S = 0.8 # hospital importance (static now)
-    U = 1 # placeholder for neighborhood adjustment
+    S = 0.8
+    M = service.get("median_income", 30000)
+    income_low = 10000
+    income_high = 50000
+    U = 1.5 - ((M - income_low) / (income_high - income_low)) * 0.5
+    U = max(0, min(1, U))
+
     C = min(1, S * U)
-
-    G = C * (1 - A) # Critical Access Gap
+    G = C * (1 - A)
 
     return jsonify({
         "service_id": service_id,
         "name": service["Facility"],
         "nearestBusStopDist": d,
+        "median_income": M,
         "A": round(A, 3),
-        "C": C,
+        "C": round(C, 3),
         "G": round(G, 3)
     })
 
