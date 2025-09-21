@@ -51,8 +51,8 @@ const handleSubmit = () => {
   .then(() => fetch(`http://localhost:5000/comments/${selectedHospital.id}`))
   .then(res => res.json())
   .then(data => {
-    setComments(data); // update state with fresh comments
-    setComment('');     // clear input
+    setComments(data); 
+    setComment(''); 
   })
   .catch(err => console.error(err));
 };
