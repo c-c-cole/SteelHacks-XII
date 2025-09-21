@@ -5,55 +5,64 @@ import LoginButton from './loginButton'
 import LogoutButton from './LogoutButton'
 import Gmap from './gMap';
 
+
 function App() {
-  const [name, setName] = useState('');
-
-  const { isAuthenticated, user} = useAuth0(); 
-
-  const handleInput = (e) => {
-    setName(e.target.value);
-  }
-
-  const handleClick = () => {
-    //nothing now
-  }
+ const [name, setName] = useState('');
 
 
-  return (
-    <>
-    <div class = "app-container">
-    <div class = "home-bar">
-      <div class = "about">
-        <h1>Access Map</h1>
-      </div>
-      <div class = "extra-info">
-        <p>"works for all!"</p>    
-      </div>
-    </div>
+ const { isAuthenticated, user} = useAuth0();
 
 
-    <div class = "container">
-      <div class = "map">
-        <h2>Select a location to view report</h2>
-        <Gmap />
-      </div>
-    </div>
-    <div>
-    <div class = "comment">
-        <input
-        type = "text"
-        value = {name}
-        onChange={handleInput}
-        placeholder = "Enter text">
-        </input>
-        <button onClick = {handleClick}>
-          Submit
-        </button>
-      </div>
-    </div>
-    </div>
-    </>
-  )
+ const handleInput = (e) => {
+   setName(e.target.value);
+ }
+
+
+ const handleClick = () => {
+   //nothing now
+ }
+
+
+
+
+ return (
+   <>
+   <div class = "app-container">
+   <div class = "home-bar">
+     <div class = "about">
+       <h1>Access Map</h1>
+     </div>
+     <div class = "extra-info">
+       <p>"works for all!"</p>   
+     </div>
+   </div>
+
+
+
+
+   <div class = "container">
+     <div class = "map">
+       <h2>Select a location to view report</h2>
+       <Gmap />
+     </div>
+   </div>
+   <div>
+   <div class = "comment">
+       <input
+       type = "text"
+       value = {name}
+       onChange={handleInput}
+       placeholder = "Enter text">
+       </input>
+       <button onClick = {handleClick}>
+         Submit
+       </button>
+     </div>
+   </div>
+   </div>
+   </>
+ )
 }
+
 
 export default App
