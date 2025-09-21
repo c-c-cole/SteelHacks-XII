@@ -21,7 +21,7 @@ useEffect(() => {
 
   // initial fetch
   const fetchComments = () => {
-    fetch(`http://localhost:5000/comments/${selectedHospital.id}`)
+    fetch(`http://127.0.0.1:5000/comments/${selectedHospital.id}`)
       .then(res => res.json())
       .then(data => setComments(data))
       .catch(err => console.error(err));
@@ -43,12 +43,12 @@ useEffect(() => {
 const handleSubmit = () => {
   if (!isAuthenticated || !selectedHospital) return;
 
-  fetch(`http://localhost:5000/comments/${selectedHospital.id}`, {
+  fetch(`http://127.0.0.1:5000/comments/${selectedHospital.id}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user: user.email, text: comment })
   })
-  .then(() => fetch(`http://localhost:5000/comments/${selectedHospital.id}`))
+  .then(() => fetch(`http://127.0.0.1:5000/comments/${selectedHospital.id}`))
   .then(res => res.json())
   .then(data => {
     setComments(data); 
