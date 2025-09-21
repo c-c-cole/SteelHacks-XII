@@ -8,6 +8,7 @@ import App from "./App.jsx";
 import Profile from "./Profile.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import NavBar from "./NavBar.jsx";
+import About from "./About.jsx";  // ✅ import About
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -30,6 +31,7 @@ createRoot(document.getElementById("root")).render(
               </ProtectedRoute>
             }
           />
+          <Route path="/about" element={<About />} /> {/* ✅ Add this */}
         </Routes>
       </Router>
     </Auth0Provider>

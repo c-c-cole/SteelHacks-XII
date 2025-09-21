@@ -119,11 +119,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem 1.5rem;  /* slightly less vertical padding */
   background: #9afffd;
   border-radius: 15px;
-  margin-bottom: 1rem; /* add spacing below nav bar */
+  max-width: 900px;          /* constrain width */
+  margin: 0 auto 1rem auto;  /* center horizontally, add bottom spacing */
 }
+
 
 .nav-bar a {
   margin-right: 1rem;
