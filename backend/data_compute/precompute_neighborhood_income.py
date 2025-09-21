@@ -10,7 +10,7 @@ NEIGHBORHOOD_CSV = "./neighborhoods.csv"
 NEIGHBORHOOD_GEOJSON = "./neighborhoods.geojson"
 
 # --- CONNECT TO MONGO ---
-mongo_uri = os.getenv("MONGO_URI") or "mongodb+srv://db_user1:qE3QAqCGEg0Pw46r@cluster0.1apjg30.mongodb.net/?retryWrites=true&w=majority"
+mongo_uri = os.getenv("MONGO_URI")
 print("Mongo URI:", mongo_uri)
 client = MongoClient(mongo_uri)
 db = client["Pitt_Data"]
