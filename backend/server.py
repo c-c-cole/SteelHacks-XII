@@ -19,6 +19,10 @@ collection = db["Hospitals"]
 
 comments_col = db["Comments"]
 
+# clears all comments on server start
+comments_col.delete_many({})  
+print("Comments collection cleared on startup.")
+
 def compute_low_high_bus():
     distances = [h['nearestBusStopDist'] for h in db.Hospitals.find() if 'nearestBusStopDist' in h]
     if not distances:

@@ -67,10 +67,10 @@ const handleSubmit = () => {
    <div class = "app-container">
    <div class = "home-bar">
      <div class = "about">
-       <h1>Access Map</h1>
+       <h1>Civic Compass</h1>
      </div>
      <div class = "extra-info">
-       <p>"Know your care"</p>   
+       <p>Navigating Access, Connecting People.</p>   
      </div>
    </div>
 
