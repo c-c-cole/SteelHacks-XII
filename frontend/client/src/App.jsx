@@ -66,7 +66,7 @@ const handleSubmit = () => {
        <h1>Access Map</h1>
      </div>
      <div class = "extra-info">
-       <p>"Accessibility for all"</p>   
+       <p>"Know your care"</p>   
      </div>
    </div>
 
