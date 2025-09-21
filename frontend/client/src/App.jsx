@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import './App.css'
 import LoginButton from './loginButton'
 import LogoutButton from './LogoutButton'
-import Gmap from './gMap';
+import Gmap from './Gmap';
 
 function App() {
   const [name, setName] = useState('');
