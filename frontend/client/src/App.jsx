@@ -1,28 +1,50 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import './App.css'
-import LoginButton from './loginButton'
-import LogoutButton from './LogoutButton'
 import Gmap from './Gmap';
 
 
 function App() {
- const [name, setName] = useState('');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+  const [selectedHospital, setSelectedHospital] = useState(null);
 
+  const { isAuthenticated, user} = useAuth0();
 
- const { isAuthenticated, user} = useAuth0();
+  // fetch comments whenever a hospital is selected
+  useEffect(() => {
+    if (selectedHospital) {
+      fetch(`http://localhost:5000/comments/${selectedHospital.id}`)
+        .then(res => res.json())
+        .then(data => setComments(data))
+        .catch(err => console.error(err));
+    }
+  }, [selectedHospital]);
 
+  const handleInput = (e) => {
+    setComment(e.target.value);
+  };
 
- const handleInput = (e) => {
-   setName(e.target.value);
- }
+ const handleSubmit = () => {
+    if (!isAuthenticated || !selectedHospital) return;
 
-
- const handleClick = () => {
-   //nothing now
- }
-
- const [selectedHospital, setSelectedHospital] = useState(null);
+    fetch(`http://localhost:5000/comments/${selectedHospital.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: user.email,
+        text: comment,
+      }),
+    })
+      .then(res => res.json())
+      .then(newComment => {
+        setComments([...comments, newComment]);
+        setComment(''); 
+      })
+      .catch(err => console.error(err));
+  };
 
  return (
    <>
@@ -36,9 +58,6 @@ function App() {
      </div>
    </div>
 
-
-
-
    <div class = "container">
      <div class = "map">
        <h2>Select a location to view report</h2>
@@ -49,17 +68,26 @@ function App() {
         <div>
           <h2>{selectedHospital.facility}</h2>
           <p><strong>Address: </strong>{selectedHospital.address}</p>
-          <div class = "comment">
-            <input
-              type = "text"
-              value = {name}
-              onChange={handleInput}
-              placeholder = "Enter text">
-            </input>
-            <button onClick = {handleClick}>
-              Submit
-            </button>
-          </div>
+          
+          <h3>Comments</h3>
+          <ul>
+            {comments.map((c, i) => (
+              <li key={i}><strong>{c.user}</strong>: {c.text}</li>
+            ))}
+          </ul>
+          {isAuthenticated ? (
+            <div className="comment">
+              <input
+                type="text"
+                value={comment}
+                onChange={handleInput}
+                placeholder="Enter your comment"
+              />
+              <button onClick={handleSubmit}>Submit</button>
+            </div>
+          ) : (
+            <p><em>Login to post a comment.</em></p>
+          )}
         </div>
       ) : (
         <p>Select a marker to see comments.</p>
