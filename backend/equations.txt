@@ -1,0 +1,10 @@
+S = service_type_weight
+U = underserved_area_factor
+P = population_search
+D = dist_to_nearest
+B = bike_friendliness
+ADA = ADA_accesibility
+M = median_income
+A = accesibility
+C = criticality
+G = gap_score
