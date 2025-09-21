@@ -37,14 +37,14 @@ const Gmap = ({ onSelectHospital }) => {
                 mapContainerStyle={containerStyle}
                 center={center}
                 zoom = {12}>
-                {hospitals.map(([lat, lng, facility, address],index) => (
+                {hospitals.map(([id, lat, lng, facility, address],index) => (
                 <Marker 
                 key = {index} 
                 position={{ lat: lat, lng: lng}}
                 onClick= {() => {
-                    setSelectedHospital({ lat, lng, facility, address, index})
+                    setSelectedHospital({id, lat, lng, facility, address, index})
                     if (onSelectHospital) {
-                        onSelectHospital({ lat, lng, facility, address, index});
+                        onSelectHospital({id, lat, lng, facility, address, index});
                     }
                 }}
                 />
@@ -60,6 +60,7 @@ const Gmap = ({ onSelectHospital }) => {
                         <p><strong></strong>{selectedHospital.address}</p>
                         <h3><strong>Latitude: </strong> {selectedHospital.lat}</h3>
                         <h3><strong>Longitude: </strong> {selectedHospital.lng}</h3>
+                        <h3>id: {selectedHospital.id}</h3>
                     </div>
                 </InfoWindow>
             )}
