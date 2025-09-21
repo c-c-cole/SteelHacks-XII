@@ -120,8 +120,9 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: #f4f4f4;
-  border-radius: 12px;
+  background: #9afffd;
+  border-radius: 15px;
+  margin-bottom: 1.5rem; /* add spacing below nav bar */
 }
 
 .nav-bar a {
