@@ -31,11 +31,11 @@ def get_service(service_id):
     A = max(0, min(1, 1 - (d - low)/(high - low)))
 
     # compute criticality C 
-    S = 0.8  # hospital importance (static now)
-    U = 1    # placeholder for neighborhood adjustment
+    S = 0.8 # hospital importance (static now)
+    U = 1 # placeholder for neighborhood adjustment
     C = min(1, S * U)
 
-    G = C * (1 - A)  # Critical Access Gap
+    G = C * (1 - A) # Critical Access Gap
 
     return jsonify({
         "service_id": service_id,
