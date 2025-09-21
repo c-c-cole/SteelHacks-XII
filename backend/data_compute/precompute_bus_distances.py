@@ -8,7 +8,7 @@ BUS_STOP_FILE = "./bus_stops.json"
 # SERVICE_TYPE = "hospital"               # filter collection
 
 # --- CONNECT TO MONGO ---
-mongo_uri = os.getenv("MONGO_URI") or "mongodb+srv://<user>:<password>@cluster0.mongodb.net/accessmap?retryWrites=true&w=majority"
+mongo_uri = os.getenv("MONGO_URI")
 client = MongoClient(mongo_uri)
 db = client["Pitt_Data"]
 
