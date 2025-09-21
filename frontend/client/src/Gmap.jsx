@@ -7,7 +7,6 @@ const containerStyle = {
     height: '400px',
 };
 
-
 const center = {
     lat: 40.4387,
     lng: -79.9972,
@@ -76,9 +75,9 @@ const Gmap = ({ onSelectHospital }) => {
                         {serviceData ? (
                             <>
                                 <h3><strong>Nearest Bus Distance: </strong> {serviceData.nearestBusStopDist} mi</h3>
-                                <p><strong>A (Access):</strong> {(serviceData.A *10).toFixed(1)}/10</p>
-                                <p><strong>C (Critical):</strong> {(serviceData.C*10).toFixed(1)}/10</p>
-                                <p><strong>G (Gap):</strong> {(serviceData.G*10).toFixed(1)}/10</p>
+                                <p><strong>Accessibility:</strong> {(serviceData.A *10).toFixed(1)}/10</p>
+                                <p><strong>Criticality:</strong> {(serviceData.C*10).toFixed(1)}/10</p>
+                                <p><strong>Service Score:</strong> {(serviceData.G*10).toFixed(1)}/10</p>
                             </>
                         ) : (
                             <p>loading</p>

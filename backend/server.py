@@ -49,7 +49,7 @@ def get_service(service_id):
     U = max(0, min(1, U))
 
     C = min(1, S * U)
-    G = C * (1 - A)
+    G = 1 - C * (1 - A)
 
     return jsonify({
         "service_id": service_id,
