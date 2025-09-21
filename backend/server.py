@@ -19,48 +19,83 @@ collection = db["Hospitals"]
 
 comments_col = db["Comments"]
 
-def compute_low_high():
+def compute_low_high_bus():
     distances = [h['nearestBusStopDist'] for h in db.Hospitals.find() if 'nearestBusStopDist' in h]
-    if not distances: # avoid crash if collection is empty
-        return 0, 1  
+    if not distances:
+        return 0, 1
     low = np.percentile(distances, 10)
     high = np.percentile(distances, 90)
+    return low, high
+
+def compute_low_high_bike():
+    distances = [h['nearestBikeDist'] for h in db.Hospitals.find() if 'nearestBikeDist' in h]
+    if not distances:
+        return 0, 1
+    low = np.percentile(distances, 10)
+    high = np.percentile(distances, 90)
+    return low, high
+
+def compute_income_bounds():
+    incomes = [h['median_income'] for h in db.Hospitals.find() if 'median_income' in h]
+    if not incomes:
+        return 10000, 50000
+    low = np.percentile(incomes, 10)
+    high = np.percentile(incomes, 90)
     return low, high
 
 
 @app.route("/service/<service_id>", methods=["GET"])
 def get_service(service_id):
-    low, high = compute_low_high()
-
+    # Fetch hospital
     service = db.Hospitals.find_one({"_id": int(service_id)})
     if not service:
         return jsonify({"error": "Service not found"}), 404
 
-    d = service.get('nearestBusStopDist', None)
-    if d is None:
-        return jsonify({"error": "Bus distance not found for this service"}), 400
-    A = max(0, min(1, 1 - (d - low) / (high - low)))
+    # --- Accessibility ---
+    w_bus = 0.6
+    w_bike = 0.3
+    w_ada = 0.1  # placeholder for now
+
+    d_bus = service.get('nearestBusStopDist', None)
+    d_bike = service.get('nearestBikeDist', None)
+    ADA = 1  # placeholder
+
+    bus_low, bus_high = compute_low_high_bus()
+    bike_low, bike_high = compute_low_high_bike()
+
+    A_bus = max(0, min(1, 1 - (d_bus - bus_low) / (bus_high - bus_low))) if d_bus is not None else 0
+    A_bike = max(0, min(1, 1 - (d_bike - bike_low) / (bike_high - bike_low))) if d_bike is not None else 0
+
+    A = w_bus * A_bus + w_bike * A_bike + w_ada * ADA
 
     S = 0.8
     M = service.get("median_income", 30000)
-    income_low = 10000
-    income_high = 50000
-    U = 1.5 - ((M - income_low) / (income_high - income_low)) * 0.5
-    U = max(0, min(1, U))
+    income_low, income_high = compute_income_bounds()
+
+    income_range = income_high - income_low
+    if income_range == 0:
+        U = 1.25  # midpoint if no variation
+    else:
+        # clamp M to [income_low, income_high]
+        M_clamped = max(income_low, min(M, income_high))
+        U = 1.5 - ((M_clamped - income_low) / income_range) * 0.5  # guaranteed 1.0 ≤ U ≤ 1.5
 
     C = min(1, S * U)
+
+
+    # --- Gap / Sufficiency ---
     G = 1 - C * (1 - A)
 
     return jsonify({
         "service_id": service_id,
         "name": service["Facility"],
-        "nearestBusStopDist": d,
+        "nearestBusStopDist": d_bus,
+        "nearestBikeDist": d_bike,
         "median_income": M,
         "A": round(A, 3),
         "C": round(C, 3),
         "G": round(G, 3)
     })
-
 
 @app.route("/")
 def home():

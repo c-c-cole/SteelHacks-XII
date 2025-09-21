@@ -79,7 +79,10 @@ const Gmap = ({ onSelectHospital }) => {
                                         <p><strong>Nearest bus distance: </strong> {serviceData.nearestBusStopDist} mi</p>
                                     </li>
                                     <li>
-                                        <p><strong>Median neighborhood income </strong> {serviceData.median_income} mi</p>
+                                        <p><strong>Nearest bike distance: </strong> {serviceData.nearestBikeDist} mi</p>
+                                    </li>
+                                    <li>
+                                        <p><strong>Median neighborhood income: </strong> ${serviceData.median_income} </p>
                                     </li>
                                 </ul>
 
