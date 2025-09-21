@@ -27,7 +27,7 @@ pip installs
 
 
 To run backend
-   enter backend
+   cd backend
    flask --app server.py run
 
 
