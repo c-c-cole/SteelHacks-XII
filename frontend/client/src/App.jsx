@@ -47,8 +47,19 @@ function App() {
      <div className = "hospital-comments">
       {selectedHospital ? (
         <div>
-          <h3>{selectedHospital.facility}</h3>
-          <p><strong>Address:</strong>{selectedHospital.address}</p>
+          <h2>{selectedHospital.facility}</h2>
+          <p><strong>Address: </strong>{selectedHospital.address}</p>
+          <div class = "comment">
+            <input
+              type = "text"
+              value = {name}
+              onChange={handleInput}
+              placeholder = "Enter text">
+            </input>
+            <button onClick = {handleClick}>
+              Submit
+            </button>
+          </div>
         </div>
       ) : (
         <p>Select a marker to see comments.</p>
@@ -56,17 +67,6 @@ function App() {
      </div>
    </div>
    <div>
-   <div class = "comment">
-       <input
-       type = "text"
-       value = {name}
-       onChange={handleInput}
-       placeholder = "Enter text">
-       </input>
-       <button onClick = {handleClick}>
-         Submit
-       </button>
-     </div>
    </div>
    </div>
    </>

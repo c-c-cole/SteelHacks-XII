@@ -36,7 +36,7 @@ const Gmap = ({ onSelectHospital }) => {
             <GoogleMap
                 mapContainerStyle={containerStyle}
                 center={center}
-                zoom = {15}>
+                zoom = {12}>
                 {hospitals.map(([lat, lng, facility, address],index) => (
                 <Marker 
                 key = {index} 
