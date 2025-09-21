@@ -16,15 +16,25 @@ function App() {
 }, [selectedHospital]);
 
 
-  // fetch comments whenever a hospital is selected
-  useEffect(() => {
-    if (selectedHospital) {
-      fetch(`http://localhost:5000/comments/${selectedHospital.id}`)
-        .then(res => res.json())
-        .then(data => setComments(data))
-        .catch(err => console.error(err));
-    }
-  }, [selectedHospital]);
+useEffect(() => {
+  if (!selectedHospital) return;
+
+  // initial fetch
+  const fetchComments = () => {
+    fetch(`http://localhost:5000/comments/${selectedHospital.id}`)
+      .then(res => res.json())
+      .then(data => setComments(data))
+      .catch(err => console.error(err));
+  };
+
+  fetchComments(); // fetch immediately
+
+  // set up polling every 5 seconds
+  const intervalId = setInterval(fetchComments, 5000);
+
+  // cleanup on unmount or hospital change
+  return () => clearInterval(intervalId);
+}, [selectedHospital]);
 
   const handleInput = (e) => {
     setComment(e.target.value);
