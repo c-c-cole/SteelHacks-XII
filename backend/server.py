@@ -15,15 +15,10 @@ client = MongoClient(mongo_uri)
 db = client["Pitt_Data"]
 collection = db["Hospitals"]
 
-# # precompute low/high for A rating
-# distances = [h['nearestBusStopDist'] for h in db.Hospitals.find()]
-# low = np.percentile(distances, 10)
-# high = np.percentile(distances, 90)
-
 def compute_low_high():
     distances = [h['nearestBusStopDist'] for h in db.Hospitals.find() if 'nearestBusStopDist' in h]
-    if not distances:
-        return 0, 1  # avoid crash if collection is empty
+    if not distances: # avoid crash if collection is empty
+        return 0, 1  
     low = np.percentile(distances, 10)
     high = np.percentile(distances, 90)
     return low, high
