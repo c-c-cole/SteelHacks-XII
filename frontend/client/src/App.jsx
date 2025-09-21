@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import './App.css'
 import Gmap from './Gmap';
+import { useLocation } from "react-router-dom";
+
 
 
 function App() {
@@ -10,6 +12,8 @@ function App() {
   const [selectedHospital, setSelectedHospital] = useState(null);
 
   const { isAuthenticated, user} = useAuth0();
+
+  const location = useLocation();
 
   useEffect(() => {
   console.log("Selected hospital:", selectedHospital);
@@ -71,10 +75,10 @@ const handleSubmit = () => {
    </div>
 
    <div class = "container">
-     <div class = "map">
-       <h2>Select a location to view report</h2>
-       <Gmap onSelectHospital={setSelectedHospital}/>
-     </div>
+    <div className="map">
+      <h2>Select a location to view report</h2>
+      <Gmap key={location.pathname} onSelectHospital={setSelectedHospital} />
+    </div>
      <div className = "hospital-comments">
       {selectedHospital ? (
         <div>
