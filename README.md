@@ -24,6 +24,7 @@ pip installs
    python3 -m pip install "pymongo[srv]==3.12"
    pip3 install flask-cors
    pip3 install python-dotenv
+   pip install numpy
 
 
 To run backend
