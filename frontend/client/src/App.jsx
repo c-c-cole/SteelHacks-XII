@@ -22,8 +22,7 @@ function App() {
    //nothing now
  }
 
-
-
+ const [selectedHospital, setSelectedHospital] = useState(null);
 
  return (
    <>
@@ -43,7 +42,17 @@ function App() {
    <div class = "container">
      <div class = "map">
        <h2>Select a location to view report</h2>
-       <Gmap />
+       <Gmap onSelectHospital={setSelectedHospital}/>
+     </div>
+     <div className = "hospital-comments">
+      {selectedHospital ? (
+        <div>
+          <h3>{selectedHospital.facility}</h3>
+          <p><strong>Address:</strong>{selectedHospital.address}</p>
+        </div>
+      ) : (
+        <p>Select a marker to see comments.</p>
+      )}
      </div>
    </div>
    <div>

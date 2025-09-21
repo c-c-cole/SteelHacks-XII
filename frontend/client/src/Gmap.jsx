@@ -14,7 +14,7 @@ const center = {
 };
 
 
-const Gmap = () => {
+const Gmap = ({ onSelectHospital }) => {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const [hospitals, setHospitals] = useState([]);
     const [selectedHospital, setSelectedHospital] = useState(null);
@@ -41,7 +41,12 @@ const Gmap = () => {
                 <Marker 
                 key = {index} 
                 position={{ lat: lat, lng: lng}}
-                onClick= {() => setSelectedHospital({ lat, lng, facility, address, index})}
+                onClick= {() => {
+                    setSelectedHospital({ lat, lng, facility, address, index})
+                    if (onSelectHospital) {
+                        onSelectHospital({ lat, lng, facility, address, index});
+                    }
+                }}
                 />
             ))}
 

@@ -30,5 +30,3 @@ To run backend
    cd backend
    flask --app server.py run
 
-
-   curl http://127.0.0.1:5000/hospitals to check get method

@@ -17,9 +17,6 @@ db = client["Pitt_Data"]
 collection = db["Hospitals"]
 
 
-for doc in collection.find().limit(5):
-   print(doc)
-
 
 @app.route("/")
 def home():
