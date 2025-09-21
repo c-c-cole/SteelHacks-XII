@@ -15,22 +15,22 @@ client = MongoClient(mongo_uri)
 db = client["Pitt_Data"]
 collection = db["Hospitals"]
 
-# Precompute low/high for A rating
+# precompute low/high for A rating
 distances = [h['nearestBusStopDist'] for h in db.Hospitals.find()]
 low = np.percentile(distances, 10)
 high = np.percentile(distances, 90)
 
 @app.route("/service/<service_id>", methods=["GET"])
 def get_service(service_id):
-    service = db.Hospitals.find_one({"_id": int(service_id)})  # adapt type to what the _id will be
+    service = db.Hospitals.find_one({"_id": int(service_id)}) # adapt type to what the _id will be
     if not service:
         return jsonify({"error": "Service not found"}), 404
 
-    # Compute A
+    # compute A
     d = service['nearestBusStopDist']
     A = max(0, min(1, 1 - (d - low)/(high - low)))
 
-    # Example: compute criticality C 
+    # compute criticality C 
     S = 0.8  # hospital importance (static now)
     U = 1    # placeholder for neighborhood adjustment
     C = min(1, S * U)

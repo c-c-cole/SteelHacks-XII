@@ -8,3 +8,9 @@ M = median_income
 A = accesibility
 C = criticality
 G = gap_score
+
+--- Equations ---
+U = 1.5 - (M - low)/(high - low)
+C = min(1, S * U)
+A = max(0, min(1, 1 - (d - low)/(high - low)))
+G = C * (1 - A)
