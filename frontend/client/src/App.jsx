@@ -29,8 +29,8 @@ useEffect(() => {
 
   fetchComments(); // fetch immediately
 
-  // set up polling every 5 seconds
-  const intervalId = setInterval(fetchComments, 5000);
+  // set up polling every 1 second
+  const intervalId = setInterval(fetchComments, 1000);
 
   // cleanup on unmount or hospital change
   return () => clearInterval(intervalId);
