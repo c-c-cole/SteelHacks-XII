@@ -74,7 +74,16 @@ const Gmap = ({ onSelectHospital }) => {
                         <p><strong></strong>{selectedHospital.address}</p>
                         {serviceData ? (
                             <>
-                                <h3><strong>Nearest Bus Distance: </strong> {serviceData.nearestBusStopDist} mi</h3>
+                                <ul>
+                                    <li>
+                                        <p><strong>Nearest bus distance: </strong> {serviceData.nearestBusStopDist} mi</p>
+                                    </li>
+                                    <li>
+                                        <p><strong>Median neighborhood income </strong> {serviceData.median_income} mi</p>
+                                    </li>
+                                </ul>
+
+
                                 <p><strong>Accessibility:</strong> {(serviceData.A *10).toFixed(1)}/10</p>
                                 <p><strong>Criticality:</strong> {(serviceData.C*10).toFixed(1)}/10</p>
                                 <p><strong>Service Score:</strong> {(serviceData.G*10).toFixed(1)}/10</p>
