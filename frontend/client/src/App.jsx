@@ -30,26 +30,23 @@ function App() {
     setComment(e.target.value);
   };
 
- const handleSubmit = () => {
-    if (!isAuthenticated || !selectedHospital) return;
+const handleSubmit = () => {
+  if (!isAuthenticated || !selectedHospital) return;
 
-    fetch(`http://localhost:5000/comments/${selectedHospital.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user: user.email,
-        text: comment,
-      }),
-    })
-      .then(res => res.json())
-      .then(newComment => {
-        setComments([...comments, newComment]);
-        setComment(''); 
-      })
-      .catch(err => console.error(err));
-  };
+  fetch(`http://localhost:5000/comments/${selectedHospital.id}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user: user.email, text: comment })
+  })
+  .then(() => fetch(`http://localhost:5000/comments/${selectedHospital.id}`))
+  .then(res => res.json())
+  .then(data => {
+    setComments(data); // update state with fresh comments
+    setComment('');     // clear input
+  })
+  .catch(err => console.error(err));
+};
+
 
  return (
    <>
