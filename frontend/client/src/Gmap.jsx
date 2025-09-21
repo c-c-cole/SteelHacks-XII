@@ -73,15 +73,12 @@ const Gmap = ({ onSelectHospital }) => {
                     <div>
                         <h2>{selectedHospital.facility}</h2>
                         <p><strong></strong>{selectedHospital.address}</p>
-                        <h3><strong>Latitude: </strong> {selectedHospital.lat}</h3>
-                        <h3><strong>Longitude: </strong> {selectedHospital.lng}</h3>
                         {serviceData ? (
                             <>
-                                <p><strong>Bus Distance:</strong> {serviceData.nearestBusStopDist}</p>
-                                <p><strong>Median Income:</strong> ${serviceData.median_income}</p>
-                                <p><strong>A (Access):</strong> {serviceData.A}</p>
-                                <p><strong>C (Cost):</strong> {serviceData.C}</p>
-                                <p><strong>G (General):</strong> {serviceData.G}</p>
+                                <h3><strong>Nearest Bus Distance: </strong> {serviceData.nearestBusStopDist} mi</h3>
+                                <p><strong>A (Access):</strong> {(serviceData.A *10).toFixed(1)}/10</p>
+                                <p><strong>C (Critical):</strong> {(serviceData.C*10).toFixed(1)}/10</p>
+                                <p><strong>G (Gap):</strong> {(serviceData.G*10).toFixed(1)}/10</p>
                             </>
                         ) : (
                             <p>loading</p>
