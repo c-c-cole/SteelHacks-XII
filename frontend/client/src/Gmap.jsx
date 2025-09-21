@@ -18,16 +18,28 @@ const Gmap = ({ onSelectHospital }) => {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
     const [hospitals, setHospitals] = useState([]);
     const [selectedHospital, setSelectedHospital] = useState(null);
+    const [serviceData, setServiceData] = useState(null);
 
     useEffect(() => {
         fetch("http://127.0.0.1:5000/hospitals")
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+                //console.log(data);
                 setHospitals(data);
             })
             .catch(console.error);
     }, []);
+
+    useEffect(() => {
+        if (selectedHospital?.id) {
+            fetch(`http://127.0.0.1:5000/service/${selectedHospital.id}`)
+                .then(res => res.json())
+                .then(data => {
+                    setServiceData(data);
+                })
+                .catch(console.error);
+        }
+    }, [selectedHospital]);
 
 
     return (
@@ -53,14 +65,27 @@ const Gmap = ({ onSelectHospital }) => {
             {selectedHospital && (
                 <InfoWindow
                     position={{ lat: selectedHospital.lat, lng: selectedHospital.lng}}
-                    onCloseClick= {() => setSelectedHospital(null)}
+                    onCloseClick= {() => {
+                        setSelectedHospital(null);
+                        setServiceData(null);
+                    }}
                 >
                     <div>
                         <h2>{selectedHospital.facility}</h2>
                         <p><strong></strong>{selectedHospital.address}</p>
                         <h3><strong>Latitude: </strong> {selectedHospital.lat}</h3>
                         <h3><strong>Longitude: </strong> {selectedHospital.lng}</h3>
-                        <h3>id: {selectedHospital.id}</h3>
+                        {serviceData ? (
+                            <>
+                                <p><strong>Bus Distance:</strong> {serviceData.nearestBusStopDist}</p>
+                                <p><strong>Median Income:</strong> ${serviceData.median_income}</p>
+                                <p><strong>A (Access):</strong> {serviceData.A}</p>
+                                <p><strong>C (Cost):</strong> {serviceData.C}</p>
+                                <p><strong>G (General):</strong> {serviceData.G}</p>
+                            </>
+                        ) : (
+                            <p>loading</p>
+                        )}
                     </div>
                 </InfoWindow>
             )}
