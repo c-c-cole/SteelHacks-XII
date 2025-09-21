@@ -11,6 +11,11 @@ function App() {
 
   const { isAuthenticated, user} = useAuth0();
 
+  useEffect(() => {
+  console.log("Selected hospital:", selectedHospital);
+}, [selectedHospital]);
+
+
   // fetch comments whenever a hospital is selected
   useEffect(() => {
     if (selectedHospital) {

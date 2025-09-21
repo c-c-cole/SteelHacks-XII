@@ -4,6 +4,8 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 import numpy as np
+from bson.objectid import ObjectId
+
 
 load_dotenv()
 app = Flask(__name__)
@@ -14,6 +16,8 @@ mongo_uri = os.getenv("MONGO_URI")
 client = MongoClient(mongo_uri)
 db = client["Pitt_Data"]
 collection = db["Hospitals"]
+
+comments_col = db["Comments"]
 
 def compute_low_high():
     distances = [h['nearestBusStopDist'] for h in db.Hospitals.find() if 'nearestBusStopDist' in h]
@@ -71,6 +75,27 @@ def get_hospitals():
    result = [[doc["_id"], doc["Y"], doc["X"], doc["Facility"], doc["Address"]] for doc in hospitals if "_id" in doc and "Y" in doc and "X" in doc and "Facility" in doc and "Address" in doc]
    return jsonify(result)
 
+
+
+@app.route("/comments/<int:hospital_id>", methods=["GET", "POST"])
+def comments(hospital_id):
+    if request.method == "GET":
+        # fetch all comments for this hospital
+        hospital_comments = list(comments_col.find({"hospital_id": hospital_id}, {"_id": 0}))
+        return jsonify(hospital_comments)
+
+    elif request.method == "POST":
+        data = request.json
+        if not data or "user" not in data or "text" not in data:
+            return jsonify({"error": "Invalid comment data"}), 400
+
+        comment_doc = {
+            "hospital_id": hospital_id,
+            "user": data["user"],
+            "text": data["text"]
+        }
+        comments_col.insert_one(comment_doc)
+        return jsonify(comment_doc), 201
 
 if __name__ == "__main__":
     app.run(debug=True)
